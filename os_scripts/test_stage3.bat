@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >NUL
 rem Этап 3: запуск эмулятора с различными вариантами VFS.
 set ROOT=%~dp0..
 for %%V in (minimal few_files deep) do (
