@@ -54,30 +54,40 @@ def ls_print(shell, entries, long_format):
         shell.write("  ".join(name for name, _ in entries))
 
 
-def ls_operand(shell, path, flags, with_header):
-    """Выводит один операнд ls: файл или содержимое каталога."""
-    node = shell.vfs.resolve(path)
-    if not node.is_dir:
-        ls_print(shell, [(path, node)], "l" in flags)
-        return
-    if with_header:
-        shell.write(f"{path}:")
-    ls_print(shell, dir_entries(node, "a" in flags), "l" in flags)
+def ls_collect(shell, paths):
+    """Разделяет операнды ls на файлы и каталоги, печатая ошибки.
 
-
-def cmd_ls(shell, args):
-    """ls [-a] [-l] [путь...] — содержимое каталогов VFS."""
-    flags, operands = split_options("ls", args, "al")
-    paths = operands or ["."]
-    code = 0
-    for index, path in enumerate(paths):
-        if index:
-            shell.write("")
+    Возвращает (файлы, каталоги, код возврата).
+    """
+    files, dirs, code = [], [], 0
+    for path in paths:
         try:
-            ls_operand(shell, path, flags, len(paths) > SINGLE)
+            node = shell.vfs.resolve(path)
         except VfsError as exc:
             shell.error(f"ls: cannot access '{path}': {exc}")
             code = LS_EXIT_TROUBLE
+            continue
+        (dirs if node.is_dir else files).append((path, node))
+    return files, dirs, code
+
+
+def cmd_ls(shell, args):
+    """ls [-a] [-l] [путь...] — содержимое каталогов VFS.
+
+    Как в coreutils: сначала выводятся файлы, затем каталоги;
+    при нескольких операндах у каталогов печатается заголовок.
+    """
+    flags, operands = split_options("ls", args, "al")
+    paths = operands or ["."]
+    files, dirs, code = ls_collect(shell, paths)
+    long_format = "l" in flags
+    ls_print(shell, files, long_format)
+    for index, (path, node) in enumerate(dirs):
+        if files or index:
+            shell.write("")
+        if len(paths) > SINGLE:
+            shell.write(f"{path}:")
+        ls_print(shell, dir_entries(node, "a" in flags), long_format)
     return code
 
 
@@ -128,6 +138,11 @@ def tree_walk(shell, node, prefix, dirs_only, counts):
             tree_walk(shell, child, prefix + extension, dirs_only, counts)
 
 
+def plural(count, one, many):
+    """Возвращает число с существительным в нужной форме (англ.)."""
+    return f"{count} {one if count == SINGLE else many}"
+
+
 def cmd_tree(shell, args):
     """tree [-d] [путь] — вывод дерева каталогов VFS."""
     flags, operands = split_options("tree", args, "d")
@@ -139,9 +154,9 @@ def cmd_tree(shell, args):
     shell.write(path)
     counts = [0, 0]
     tree_walk(shell, node, "", "d" in flags, counts)
-    summary = f"{counts[0]} directories"
+    summary = plural(counts[0], "directory", "directories")
     if "d" not in flags:
-        summary += f", {counts[1]} files"
+        summary += ", " + plural(counts[1], "file", "files")
     shell.write("")
     shell.write(summary)
     return 0
