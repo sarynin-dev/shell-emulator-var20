@@ -32,8 +32,21 @@ def cmd_exit(shell, args):
     return code
 
 
+def cmd_vfs_info(shell, args):
+    """Служебная команда: сведения о загруженной VFS."""
+    if args:
+        raise ShellError("vfs-info: too many arguments")
+    dirs, files, depth = shell.vfs.stats()
+    shell.write(f"source:      {shell.vfs.source}")
+    shell.write(f"directories: {dirs}")
+    shell.write(f"files:       {files}")
+    shell.write(f"max depth:   {depth}")
+    return 0
+
+
 COMMANDS = {
     "ls": cmd_ls,
     "cd": cmd_cd,
     "exit": cmd_exit,
+    "vfs-info": cmd_vfs_info,
 }

@@ -1,0 +1,9 @@
+{
+  "root": {
+    "type": "dir",
+    "children": [
+      {"name": "a.txt", "type": "file", "content": "1"},
+      {"name": "bad.bin", "type": "file", "content_base64": "@@не base64@@"}
+    ]
+  }
+}

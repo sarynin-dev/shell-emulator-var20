@@ -1,0 +1,16 @@
+{
+  "root": {
+    "type": "dir",
+    "children": [
+      {"name": "readme.txt", "type": "file",
+       "content": "Небольшая VFS из нескольких файлов.\nВторая строка.\n"},
+      {"name": "colors.txt", "type": "file",
+       "content": "red\nred\ngreen\nblue\nblue\nblue\nred\n"},
+      {"name": "empty.txt", "type": "file", "content": ""},
+      {"name": "logo.png", "type": "file", "mode": "600",
+       "content_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJ"},
+      {"name": "hello.b64", "type": "file",
+       "content_base64": "0J/RgNC40LLQtdGCLCDQvNC40YAhCg=="}
+    ]
+  }
+}

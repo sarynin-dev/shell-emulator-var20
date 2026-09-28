@@ -1,0 +1,51 @@
+{
+  "home": "/home/user",
+  "root": {
+    "type": "dir", "owner": "root", "group": "root", "mode": "755",
+    "children": [
+      {"name": "etc", "type": "dir", "children": [
+        {"name": "hostname", "type": "file", "content": "emulator\n"},
+        {"name": "shadow", "type": "file", "mode": "640",
+         "group": "shadow", "content": "root:*:19000:0:99999:7:::\n"}
+      ]},
+      {"name": "tmp", "type": "dir", "mode": "777", "children": []},
+      {"name": "var", "type": "dir", "children": [
+        {"name": "log", "type": "dir", "children": [
+          {"name": "syslog", "type": "file", "mode": "640",
+           "content": "boot ok\nboot ok\nnetwork up\nboot ok\n"}
+        ]}
+      ]},
+      {"name": "home", "type": "dir", "children": [
+        {"name": "user", "type": "dir", "owner": "user", "children": [
+          {"name": "notes.txt", "type": "file", "owner": "user",
+           "content": "купить молоко\nсдать практику\nсдать практику\n"},
+          {"name": "run.sh", "type": "file", "owner": "user",
+           "mode": "755", "content": "#!/bin/sh\necho hello\n"},
+          {"name": "photo.jpg", "type": "file", "owner": "user",
+           "content_base64": "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP8="},
+          {"name": "docs", "type": "dir", "owner": "user", "children": [
+            {"name": "report.txt", "type": "file", "owner": "user",
+             "content": "Отчёт по практике\n"},
+            {"name": "drafts", "type": "dir", "owner": "user",
+             "children": [
+              {"name": "draft1.txt", "type": "file", "owner": "user",
+               "content": "черновик 1\n"},
+              {"name": "old", "type": "dir", "owner": "user",
+               "children": [
+                {"name": "draft0.txt", "type": "file", "owner": "user",
+                 "content": "самый первый черновик\n"}
+              ]}
+            ]}
+          ]},
+          {"name": "projects", "type": "dir", "owner": "user",
+           "children": [
+            {"name": "app", "type": "dir", "owner": "user", "children": [
+              {"name": "main.py", "type": "file", "owner": "user",
+               "content": "print('hello')\n"}
+            ]}
+          ]}
+        ]}
+      ]}
+    ]
+  }
+}

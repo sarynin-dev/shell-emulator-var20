@@ -6,6 +6,7 @@ from shell_emulator.commands import COMMANDS
 from shell_emulator.errors import ShellError
 from shell_emulator.parser import parse_line
 from shell_emulator.prompt import make_prompt
+from shell_emulator.vfs import Vfs
 
 EXIT_ERROR = 1
 EXIT_NOT_FOUND = 127
@@ -27,6 +28,7 @@ class Shell:
         self.out = out if out is not None else sys.stdout
         self.running = True
         self.exit_code = 0
+        self.vfs = Vfs()
 
     def write(self, text):
         """Выводит строку текста пользователю."""
@@ -43,7 +45,7 @@ class Shell:
 
     def prompt(self):
         """Возвращает текущее приглашение к вводу."""
-        return make_prompt()
+        return make_prompt(self.vfs.display_path())
 
     def execute(self, line):
         """Выполняет одну строку. Возвращает код возврата команды."""
