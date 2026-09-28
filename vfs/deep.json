@@ -12,7 +12,7 @@
       {"name": "var", "type": "dir", "children": [
         {"name": "log", "type": "dir", "children": [
           {"name": "syslog", "type": "file", "mode": "640",
-           "content": "boot ok\nboot ok\nnetwork up\nboot ok\n"}
+           "content": "boot ok\nBoot OK\nnetwork up\nboot ok\n"}
         ]}
       ]},
       {"name": "home", "type": "dir", "children": [
@@ -21,6 +21,8 @@
            "content": "купить молоко\nсдать практику\nсдать практику\n"},
           {"name": "run.sh", "type": "file", "owner": "user",
            "mode": "755", "content": "#!/bin/sh\necho hello\n"},
+          {"name": "hello.txt", "type": "file", "owner": "user",
+           "content_base64": "0J/RgNC40LLQtdGCLCDQvNC40YAhCg=="},
           {"name": "photo.jpg", "type": "file", "owner": "user",
            "content_base64": "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP8="},
           {"name": "docs", "type": "dir", "owner": "user", "children": [

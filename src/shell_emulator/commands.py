@@ -1,22 +1,9 @@
-"""Команды эмулятора (на этапе 1 — заглушки)."""
+"""Реестр команд эмулятора и служебные команды."""
 
 from shell_emulator.errors import ShellError
-
-
-def cmd_stub(shell, name, args):
-    """Заглушка: выводит имя команды и её аргументы."""
-    shell.write(f"{name} {' '.join(args)}".rstrip())
-    return 0
-
-
-def cmd_ls(shell, args):
-    """Заглушка команды ls."""
-    return cmd_stub(shell, "ls", args)
-
-
-def cmd_cd(shell, args):
-    """Заглушка команды cd."""
-    return cmd_stub(shell, "cd", args)
+from shell_emulator.fs_commands import (
+    cmd_cat, cmd_cd, cmd_ls, cmd_tree, cmd_uniq,
+)
 
 
 def cmd_exit(shell, args):
@@ -47,6 +34,9 @@ def cmd_vfs_info(shell, args):
 COMMANDS = {
     "ls": cmd_ls,
     "cd": cmd_cd,
+    "cat": cmd_cat,
+    "tree": cmd_tree,
+    "uniq": cmd_uniq,
     "exit": cmd_exit,
     "vfs-info": cmd_vfs_info,
 }

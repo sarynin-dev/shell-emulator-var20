@@ -70,19 +70,5 @@ class StubCommandsTest(unittest.TestCase):
         self.assertIn("unknown: command not found", out.getvalue())
 
 
-class StubOutputTest(unittest.TestCase):
-    """Заглушки ls и cd выводят имя и аргументы (этап 1)."""
-
-    def test_ls_stub(self):
-        """ls печатает своё имя и аргументы."""
-        _, out = run(["ls -l /tmp"])
-        self.assertEqual(out.strip(), "ls -l /tmp")
-
-    def test_cd_stub(self):
-        """cd печатает своё имя и аргументы."""
-        _, out = run(["cd /home"])
-        self.assertEqual(out.strip(), "cd /home")
-
-
 if __name__ == "__main__":
     unittest.main()

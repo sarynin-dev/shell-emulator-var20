@@ -29,6 +29,7 @@ class Shell:
         self.running = True
         self.exit_code = 0
         self.vfs = Vfs()
+        self.previous_dir = None
 
     def write(self, text):
         """Выводит строку текста пользователю."""
