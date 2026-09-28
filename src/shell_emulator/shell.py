@@ -9,13 +9,21 @@ from shell_emulator.prompt import make_prompt
 
 EXIT_ERROR = 1
 EXIT_NOT_FOUND = 127
+COMMENT_PREFIX = "#"
+
+
+def is_skippable(line):
+    """Проверяет, что строка скрипта пустая или является комментарием."""
+    stripped = line.strip()
+    return not stripped or stripped.startswith(COMMENT_PREFIX)
 
 
 class Shell:
     """Эмулятор командной оболочки."""
 
-    def __init__(self, out=None):
-        """Создаёт оболочку, пишущую вывод в поток out."""
+    def __init__(self, config=None, out=None):
+        """Создаёт оболочку с настройками config и потоком вывода out."""
+        self.config = config
         self.out = out if out is not None else sys.stdout
         self.running = True
         self.exit_code = 0
@@ -51,6 +59,33 @@ class Shell:
         except ShellError as exc:
             self.error(str(exc))
             return EXIT_ERROR
+
+    def run_script(self, path):
+        """Выполняет стартовый скрипт, имитируя диалог с пользователем.
+
+        Каждая команда выводится вместе с приглашением, затем её вывод.
+        Выполнение останавливается при первой ошибке.
+        Возвращает код возврата последней выполненной команды.
+        """
+        try:
+            with open(path, encoding="utf-8") as script:
+                lines = script.read().splitlines()
+        except OSError as exc:
+            self.error(f"script: {path}: {exc.strerror}")
+            self.stop(EXIT_ERROR)
+            return EXIT_ERROR
+        for number, line in enumerate(lines, start=1):
+            if not self.running:
+                break
+            if is_skippable(line):
+                continue
+            self.write(self.prompt() + line.strip())
+            code = self.execute(line)
+            if code != 0 and self.running:
+                self.error(f"script: остановлен на строке {number}")
+                self.stop(code)
+                return code
+        return self.exit_code
 
     def repl(self, stream=None):
         """Интерактивный цикл: чтение, выполнение, вывод."""
