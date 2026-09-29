@@ -155,29 +155,29 @@ os_scripts/           скрипты ОС, запускающие эмулято
 $ ./run.sh --vfs vfs/deep.json
 [config] vfs_path    = vfs/deep.json
 [config] script_path = <не задан>
-egor@laptop:~$ ls -l
+Lenovo@DESKTOP-FQ7S9A9:~$ ls -l
 drwxr-xr-x user     user       4096 docs
 -rw-r--r-- user     user         22 hello.txt
 -rw-r--r-- user     user         82 notes.txt
 -rw-r--r-- user     user         26 photo.jpg
 drwxr-xr-x user     user       4096 projects
 -rwxr-xr-x user     user         21 run.sh
-egor@laptop:~$ cd docs/drafts
-egor@laptop:~/docs/drafts$ cd ~
-egor@laptop:~$ uniq -c notes.txt
+Lenovo@DESKTOP-FQ7S9A9:~$ cd docs/drafts
+Lenovo@DESKTOP-FQ7S9A9:~/docs/drafts$ cd ~
+Lenovo@DESKTOP-FQ7S9A9:~$ uniq -c notes.txt
       1 купить молоко
       2 сдать практику
-egor@laptop:~$ chmod u-x,go=r run.sh
-egor@laptop:~$ chown bob:staff run.sh
-egor@laptop:~$ ls -l run.sh
+Lenovo@DESKTOP-FQ7S9A9:~$ chmod u-x,go=r run.sh
+Lenovo@DESKTOP-FQ7S9A9:~$ chown bob:staff run.sh
+Lenovo@DESKTOP-FQ7S9A9:~$ ls -l run.sh
 -rw-r--r-- bob      staff        21 run.sh
-egor@laptop:~$ tree projects
+Lenovo@DESKTOP-FQ7S9A9:~$ tree projects
 projects
 └── app
     └── main.py
 
 1 directory, 1 file
-egor@laptop:~$ cat nope.txt
+Lenovo@DESKTOP-FQ7S9A9:~$ cat nope.txt
 cat: nope.txt: No such file or directory
-egor@laptop:~$ exit
+Lenovo@DESKTOP-FQ7S9A9:~$ exit
 ```
